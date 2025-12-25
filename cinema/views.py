@@ -1,11 +1,20 @@
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import generics, mixins, status, viewsets
+from rest_framework import (
+    generics,
+    mixins,
+    status,
+    viewsets
+)
 from rest_framework.views import APIView
 
 from django.shortcuts import get_object_or_404
 
-from cinema.models import Actor, CinemaHall, Genre, Movie
+from cinema.models import (
+    Actor,
+    CinemaHall,
+    Genre,
+    Movie
+)
 from cinema.serializers import (
     ActorSerializer,
     CinemaHallSerializer,
@@ -47,7 +56,7 @@ class GenreDetail(APIView):
 
     def patch(self, request, pk):
         genre = self.get_object(pk)
-        serializer = GenreSerializer(genre, data=request.data)
+        serializer = GenreSerializer(genre, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
